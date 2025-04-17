@@ -32,6 +32,28 @@ class ClientHandler implements Runnable {
         this.clientSocket = socket;
         this.clients = clients;
         this.out = new PrintWriter(clientSocket.getOutputStream(), true);
+        this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    }
 
+    public void run() {
+        try {
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                for (ClientHandler aClient : clients) {
+                    aClient.out.println(inputLine);
+                }
+            }
+        } catch (IOException e) {
+            String message = String.format("An error occurred: %s", e.getMessage());
+            System.out.println(message);
+        } finally {
+            try {
+                in.close();
+                out.close();
+                clientSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
