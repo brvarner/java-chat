@@ -1,3 +1,5 @@
+package server;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -15,7 +17,7 @@ public class ChatServer {
             String connectMessage = String.format("Client connected: %s", clientSocket);
             System.out.println(connectMessage);
 
-            ClientHandler clientThread = new ClientHandler(clientsocket, clients);
+            ClientHandler clientThread = new ClientHandler(clientSocket, clients);
             clients.add(clientThread);
             new Thread(clientThread).start();
         }
