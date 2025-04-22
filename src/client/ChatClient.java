@@ -19,7 +19,7 @@ public class ChatClient {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String line = "";
-            while(!line.equals("exit")){
+            while (!line.equals("exit")) {
                 line = inputConsole.readLine();
                 out.println(line);
                 System.out.println(in.readLine());
@@ -28,11 +28,16 @@ public class ChatClient {
             socket.close();
             inputConsole.close();
             out.close();
+        } catch (UnknownHostException u) {
+            String msg = String.format("Host unknown: %s", u.getMessage());
+            System.out.println(msg);
+        } catch (IOException i) {
+            String msg = String.format("Unexpected exception: %s", i.getMessage());
+            System.out.println(msg);
         }
     }
 
     public static void main(String[] args) {
-        Socket socket = new Socket("localhost", 5000);
-        System.out.println("Connected to server.");
+        ChatClient client = new ChatClient("127.0.0.1", 5000);
     }
 }
