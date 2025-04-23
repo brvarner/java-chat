@@ -15,6 +15,7 @@ public class ChatClient {
         System.out.println("Connected to the chat server");
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new PrintWriter(socket.getOutputStream(), true);
+        this.onMessageReceived = onMessageReceived;
     }
 
     public void sendMessage(String msg) {
